@@ -9,12 +9,20 @@ export default function Home() {
   const [createPassword, setCreatePassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("");
 
   const router = useRouter();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !createPassword || !confirmPassword) {
+      setErrMsg("Please check again");
+      setError(true);
+      return;
+    }
+
+    if (createPassword !== confirmPassword) {
+      setErrMsg("Password does not match");
       setError(true);
       return;
     }
@@ -80,7 +88,8 @@ export default function Home() {
               <input
                 onChange={(e) => setCreatePassword(e.target.value)}
                 className={`${
-                  !createPassword && error
+                  (!confirmPassword && error) ||
+                  (createPassword !== confirmPassword && error)
                     ? "border-[#FF3939]"
                     : "border-[#D9D9D9]"
                 } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
@@ -112,7 +121,8 @@ export default function Home() {
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className={`${
-                  !confirmPassword && error
+                  (!confirmPassword && error) ||
+                  (createPassword !== confirmPassword && error)
                     ? "border-[#FF3939]"
                     : "border-[#D9D9D9]"
                 } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
@@ -121,10 +131,13 @@ export default function Home() {
               />
               <p
                 className={`${
-                  !confirmPassword && error ? "block" : "hidden"
+                  (!confirmPassword && error) ||
+                  (createPassword !== confirmPassword && error)
+                    ? "block"
+                    : "hidden"
                 }  absolute pl-[0.5rem] text-[#FF3939] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]`}
               >
-                Please check again
+                {errMsg}
               </p>
               <Image
                 className="absolute bottom-[1rem] left-[1rem]"
