@@ -7,7 +7,11 @@ function LinkListDesktop() {
   const { submittedData } = useLink();
   return (
     <div className="relative hidden xl:w-[40.94%] bg-white xl:flex items-center justify-center rounded-[0.75rem]">
-      <Image src="/assets/phone.svg" alt="phone" width="307" height="631" />
+      {submittedData.length > 0 ? (
+        <Image src="/assets/phonee.svg" alt="phone" width="307" height="631" />
+      ) : (
+        <Image src="/assets/phone.svg" alt="phone" width="307" height="631" />
+      )}
 
       {submittedData.length > 0 ? (
         <ul className="dropdown-list absolute top-[23.75rem] list-none flex flex-col gap-[1.25rem] pl-[0.5rem] mb-[0.563rem] w-[15.813rem] h-[20rem] overflow-y-scroll">
