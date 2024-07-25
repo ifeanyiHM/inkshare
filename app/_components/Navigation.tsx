@@ -49,7 +49,7 @@ function Navigation() {
                 href={link.href}
                 className={`${
                   isActive ? "filter" : ""
-                }  px-[1.688rem] py-[0.688rem] md:py-[0.813rem] rounded-lg md:flex md:items-center md:gap-[0.5rem]`}
+                }  px-[1.688rem] py-[0.688rem] md:py-[0.813rem] block rounded-lg md:flex md:items-center md:gap-[0.5rem]`}
               >
                 <Image
                   src={link.src}
