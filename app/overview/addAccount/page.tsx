@@ -61,7 +61,7 @@ function Acc() {
               <p className="text-[#737373] md:w-[40%]">Profile picture</p>
               <div className="md:w-[57.33%] md:flex md:items-center md:gap-[1.5rem]">
                 <div className="pt-[1rem] pb-[1.5rem] md:p-0">
-                  <label htmlFor="img" className="relative">
+                  <label htmlFor="img" className="relative cursor-pointer">
                     <input
                       type="file"
                       id="img"

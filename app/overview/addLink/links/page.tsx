@@ -19,9 +19,6 @@ function LinkPage() {
     errorMessage,
   } = useLink();
 
-  // const regex =
-  //   /^(https?:\/\/)?([\w\-]+\.)+[a-z]{2,6}(:\d+)?(\/[\w\-\.~!$&'()*+,;=:@%]*)*(\?[;\w\-\.~!$&'()*+,;=:@%]*)?(#[\w\-\.~!$&'()*+,;=:@%]*)?$/i;
-
   const URL_TYPE = regex;
 
   return (
@@ -110,7 +107,7 @@ function LinkPage() {
                   </div>
 
                   {openDropdownIndex === formIndex && (
-                    <div className="shadow dropdown-list bg-[#fff] absolute w-full z-10 top-[3.7rem] h-[10rem] rounded-lg overflow-y-scroll py-[0.75rem]">
+                    <div className="shadow dropdown-list bg-[#fff] absolute w-full z-10 top-[3.7rem] h-[10rem] xl:h-[15rem] rounded-lg overflow-y-scroll py-[0.75rem]">
                       {itemList.map((item, itemIndex) => (
                         <>
                           <div
@@ -118,7 +115,7 @@ function LinkPage() {
                             onClick={() =>
                               handleSelectItem(formIndex, itemIndex)
                             }
-                            className="relative"
+                            className="relative cursor-pointer"
                           >
                             <div className="icon-filter absolute left-[1rem] bottom-[0.3rem]">
                               <Image
@@ -152,7 +149,12 @@ function LinkPage() {
 
                 <div className="relative">
                   <input
-                    className="block w-full h-[3rem]  bg-[#fff] rounded-lg pl-[2.75rem] border border-[#D9D9D9]"
+                    className={` ${
+                      (!inputValues[formIndex] && inputError) ||
+                      (!URL_TYPE.test(inputValues[formIndex]) && inputError)
+                        ? "border-[#FF3939]"
+                        : "border-[#D9D9D9]"
+                    }  box block w-full h-[3rem] active:border-[#633CFF] outline-none bg-[#fff] rounded-lg pl-[2.75rem] border border-[#D9D9D9]`}
                     type="text"
                     placeholder="e.g. https://www.github.com/johnappleseed"
                     value={inputValues[formIndex] || ""}

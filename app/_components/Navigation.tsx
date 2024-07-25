@@ -44,13 +44,13 @@ function Navigation() {
         {links.map((link, index) => {
           const isActive = pathName.startsWith(link.href);
           return (
-            <div
-              key={index}
-              className={`${
-                isActive ? "filter" : ""
-              }  px-[1.688rem] py-[0.688rem] md:py-[0.813rem] rounded-lg md:flex md:items-center md:gap-[0.5rem]`}
-            >
-              <Link href={link.href}>
+            <div key={index}>
+              <Link
+                href={link.href}
+                className={`${
+                  isActive ? "filter" : ""
+                }  px-[1.688rem] py-[0.688rem] md:py-[0.813rem] rounded-lg md:flex md:items-center md:gap-[0.5rem]`}
+              >
                 <Image
                   src={link.src}
                   alt="linkshare loo"
@@ -66,18 +66,13 @@ function Navigation() {
         })}
       </div>
       <div className="px-[1rem] md:px-[1.688rem] py-[0.688rem] border border-[#633CFF] md:hover:bg-[#EFEBFF] rounded-lg">
-        {!isDesktopView ? (
-          <Link href="/timeline">
-            <Image
-              src="/assets/eye.svg"
-              alt="linkshare loo"
-              width="20"
-              height="20"
-            />
-          </Link>
-        ) : (
-          <span className="text-[#633CFF] font-semibold">Preview</span>
-        )}
+        <Link href="/timeline">
+          {!isDesktopView ? (
+            <Image src="/assets/eye.svg" alt="preview" width="20" height="20" />
+          ) : (
+            <span className="text-[#633CFF] font-semibold">Preview</span>
+          )}
+        </Link>
       </div>
     </div>
   );

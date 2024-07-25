@@ -21,10 +21,10 @@ function Layout({ children }: linkProps) {
           Add/edit/remove links below and then share all your profiles with the
           world!
         </p>
-        <div className="px-[1.5rem] md:px-[2.5rem]">
+        <div className="px-[1.5rem] md:px-[2.5rem] cursor-pointer ">
           <span
             onClick={() => handleAddForm()}
-            className="md:hover:bg=[#EFEBFF] mt-[2.5rem] block py-[0.688rem] rounded-lg text-center w-full border border-[#633CFF] text-[#633CFF]"
+            className="md:hover:bg-[#EFEBFF] mt-[2.5rem] block py-[0.688rem] rounded-lg text-center w-full border border-[#633CFF] text-[#633CFF]"
           >
             + Add new link
           </span>
@@ -37,7 +37,7 @@ function Layout({ children }: linkProps) {
             onClick={handleSubmitForm}
             className={` ${
               isFormClicked ? "bg-[#633CFF]" : "bg-[#BEADFF]"
-            }  font-semibold w-full md:w-[5.688rem] py-[0.688rem] text-[#fff] text-center rounded-lg`}
+            }  font-semibold w-full md:w-[5.688rem] py-[0.688rem] text-[#fff] text-center rounded-lg cursor-pointer`}
           >
             Save
           </button>
