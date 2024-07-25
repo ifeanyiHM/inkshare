@@ -32,9 +32,9 @@ function Acc() {
       imageFile,
     });
 
-    setFirstName("");
-    setLastName("");
-    setEmail("");
+    // setFirstName("");
+    // setLastName("");
+    // setEmail("");
     router.push("/timeline");
   }
 
