@@ -9,20 +9,26 @@ export default function Home() {
   const [createPassword, setCreatePassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  const [errMsg, setErrMsg] = useState<string>("");
+  // const [errMsg, setErrMsg] = useState<string>("");
 
   const router = useRouter();
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !createPassword || !confirmPassword) {
-      setErrMsg("Please check again");
+      // setErrMsg("Please check again");
       setError(true);
       return;
     }
 
     if (createPassword !== confirmPassword) {
-      setErrMsg("Password does not match");
+      // setErrMsg("Password does not match");
+      setError(true);
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
       setError(true);
       return;
     }
@@ -30,7 +36,7 @@ export default function Home() {
     router.push("/overview/addLink");
   }
   return (
-    <div className="p-[2rem] flex flex-col gap-[4rem] md:gap-[3.188rem] md:bg-[#FAFAFA] md:items-center md:justify-center md:h-[100vh]">
+    <div className="p-[2rem] flex flex-col gap-[4rem] md:gap-[3.188rem] md:bg-[#FAFAFA] md:items-center md:justify-center ">
       <div className="logo">
         <Image
           src="/assets/linkshare-logo.svg"
@@ -58,17 +64,22 @@ export default function Home() {
               <input
                 onChange={(e) => setEmail(e.target.value)}
                 className={`${
-                  !email && error ? "border-[#FF3939]" : "border-[#D9D9D9]"
+                  (!email && error) || (!emailRegex.test(email) && error)
+                    ? "border-[#FF3939]"
+                    : "border-[#D9D9D9]"
                 } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
                 type="text"
                 placeholder="e.g. alex@email.com"
               />
               <p
                 className={`${
-                  !email && error ? "block" : "hidden"
+                  (!email && error) || (!emailRegex.test(email) && error)
+                    ? "block"
+                    : "hidden"
                 }  absolute pl-[0.5rem] text-[#FF3939] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]`}
               >
-                Can&apos;t be empty
+                {(!email && "Can't be empty") ||
+                  (!emailRegex.test(email) && "Please enter a valid Email")}
               </p>
               <Image
                 className="absolute bottom-[1rem] left-[1rem]"
@@ -88,8 +99,7 @@ export default function Home() {
               <input
                 onChange={(e) => setCreatePassword(e.target.value)}
                 className={`${
-                  (!confirmPassword && error) ||
-                  (createPassword !== confirmPassword && error)
+                  !createPassword && error
                     ? "border-[#FF3939]"
                     : "border-[#D9D9D9]"
                 } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
@@ -116,7 +126,7 @@ export default function Home() {
                 className="block text-[0.75rem] text-[#333333] mb-[0.25rem]"
                 htmlFor="password"
               >
-                Create password
+                Confirm password
               </label>
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -137,7 +147,9 @@ export default function Home() {
                     : "hidden"
                 }  absolute pl-[0.5rem] text-[#FF3939] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]`}
               >
-                {errMsg}
+                {(!confirmPassword && "Please check again") ||
+                  (createPassword !== confirmPassword &&
+                    "Password does not match")}
               </p>
               <Image
                 className="absolute bottom-[1rem] left-[1rem]"
