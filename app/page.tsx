@@ -19,8 +19,8 @@ export default function Home() {
     }
 
     router.push("/overview/addLink");
-    setEmail("");
-    setPassword("");
+    // setEmail("");
+    // setPassword("");
   }
   return (
     <div className="p-[2rem] flex flex-col gap-[4rem] md:gap-[3.188rem] md:bg-[#FAFAFA] md:items-center md:justify-center md:h-[100vh]">
