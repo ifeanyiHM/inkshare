@@ -9,7 +9,6 @@ export default function Home() {
   const [createPassword, setCreatePassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  // const [errMsg, setErrMsg] = useState<string>("");
 
   const router = useRouter();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -17,13 +16,11 @@ export default function Home() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !createPassword || !confirmPassword) {
-      // setErrMsg("Please check again");
       setError(true);
       return;
     }
 
     if (createPassword !== confirmPassword) {
-      // setErrMsg("Password does not match");
       setError(true);
       return;
     }

@@ -11,9 +11,16 @@ export default function Home() {
 
   const router = useRouter();
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !password) {
+      setError(true);
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
       setError(true);
       return;
     }
@@ -44,7 +51,9 @@ export default function Home() {
             <div className="relative">
               <label
                 className={`${
-                  !email && error ? "text-[#FF3939]" : "text-[#333333]"
+                  (!email && error) || (!emailRegex.test(email) && error)
+                    ? "text-[#FF3939]"
+                    : "text-[#333333]"
                 } block text-[0.75rem] mb-[0.25rem] `}
                 htmlFor="email"
               >
@@ -53,17 +62,22 @@ export default function Home() {
               <input
                 onChange={(e) => setEmail(e.target.value)}
                 className={`${
-                  !email && error ? "border-[#FF3939]" : "border-[#D9D9D9]"
+                  (!email && error) || (!emailRegex.test(email) && error)
+                    ? "border-[#FF3939]"
+                    : "border-[#D9D9D9]"
                 } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
                 type="text"
                 placeholder="e.g. alex@email.com"
               />
               <p
                 className={`${
-                  !email && error ? "block" : "hidden"
+                  (!email && error) || (!emailRegex.test(email) && error)
+                    ? "block"
+                    : "hidden"
                 }  absolute pl-[0.5rem] text-[#FF3939] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]`}
               >
-                Can&apos;t be empty
+                {(!email && "Can't be empty") ||
+                  (!emailRegex.test(email) && "Invalid email")}
               </p>
               <Image
                 className="absolute bottom-[1rem] left-[1rem]"
