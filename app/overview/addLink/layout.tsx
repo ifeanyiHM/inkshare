@@ -24,7 +24,7 @@ function Layout({ children }: linkProps) {
         <div className="px-[1.5rem] md:px-[2.5rem] cursor-pointer ">
           <span
             onClick={() => handleAddForm()}
-            className="md:hover:bg-[#EFEBFF] mt-[2.5rem] block py-[0.688rem] rounded-lg text-center w-full border border-[#633CFF] text-[#633CFF]"
+            className="md:hover:bg-[#EFEBFF] mt-[2.5rem] font-semibold block py-[0.688rem] rounded-lg text-center w-full border border-[#633CFF] text-[#633CFF]"
           >
             + Add new link
           </span>

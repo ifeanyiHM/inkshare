@@ -57,7 +57,7 @@ function Navigation() {
                   width="20"
                   height="20"
                 />
-                <span className="text-[#888888] hidden md:block hover:text-[#633CFF]">
+                <span className="text-[#888888] hidden md:block font-semibold hover:text-[#633CFF]">
                   {link.title}
                 </span>
               </Link>

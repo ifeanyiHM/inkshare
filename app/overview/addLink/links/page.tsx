@@ -61,7 +61,8 @@ function LinkPage() {
                     }
                     className="relative w-full flex items-center justify-between py-[0.75rem]  bg-[#fff] rounded-lg border border-[#D9D9D9]"
                   >
-                    {selectedItems[formIndex] !== undefined ? (
+                    {selectedItems[formIndex] !== undefined &&
+                    selectedItems[formIndex] !== 0 ? (
                       <>
                         <div className="icon-filter absolute left-[1rem] bottom-[1rem]">
                           <Image

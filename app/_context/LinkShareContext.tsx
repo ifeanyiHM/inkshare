@@ -165,7 +165,9 @@ function LinkProvider({ children }: LinkProviderProps) {
   const [addForm, setAddForm] = useState<number[]>([]);
   const [isFormClicked, setIsFormClicked] = useState<boolean>(false);
   const [itemList, setItemList] = useState<dropDownListProps[]>(dropDownList);
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>(
+    addForm.map(() => 0)
+  );
   const [inputValues, setInputValues] = useState<string[]>([]);
   const [inputError, setInputError] = useState<boolean>(false);
   const [submittedData, setSubmittedData] = useState<dropDownListProps[]>([]);
@@ -208,6 +210,7 @@ function LinkProvider({ children }: LinkProviderProps) {
     setAddForm((prev) => [...prev, prev.length + 1]);
     router.push("/overview/addLink/links");
     setIsFormClicked(true);
+    setSelectedItems((prev) => [...prev, 0]);
   };
 
   function handleSubmitLink(event: React.FormEvent) {
@@ -274,6 +277,7 @@ function LinkProvider({ children }: LinkProviderProps) {
       }
       return newAddForm;
     });
+    setSelectedItems((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
