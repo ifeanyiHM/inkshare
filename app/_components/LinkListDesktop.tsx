@@ -8,7 +8,7 @@ function LinkListDesktop() {
   return (
     <div className="relative hidden xl:w-[40.94%] bg-white xl:flex items-center justify-center rounded-[0.75rem]">
       <div className="absolute top-[6.344rem]">
-        {submittedData.length > 0 ? (
+        {submittedData.length > 0 || submittedProfile !== null ? (
           <div>
             <Image
               src="/assets/phonee.svg"
@@ -27,7 +27,7 @@ function LinkListDesktop() {
             />
           </div>
         )}
-        {submittedData.length > 0 ? (
+        {submittedData.length > 0 || submittedProfile !== null ? (
           <div className=" absolute top-[3.969rem] flex flex-col justify-center items-center  w-full  mx-auto text-center  ">
             <div className="mb-[3.5rem]">
               <div className="relative flex items-center justify-center w-[96px] h-[96px] mx-auto">
