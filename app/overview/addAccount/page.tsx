@@ -15,7 +15,8 @@ function Acc() {
 
   const router = useRouter();
 
-  const { setSubmittedProfile, imageFile, setImageFile } = useLink();
+  const { setSubmittedProfile, imageFile, setImageFile, setBlankProfile } =
+    useLink();
 
   async function handleAddProfile(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,6 +43,7 @@ function Acc() {
     if (e.target.files && e.target.files[0]) {
       setImageFile(URL.createObjectURL(e.target.files[0]));
       setIsImageUploaded(true);
+      setBlankProfile(URL.createObjectURL(e.target.files[0]));
     }
   }
 

@@ -1,10 +1,9 @@
 import Image from "next/image";
-import LinkTimeline from "./LinkTimeline";
 import Link from "next/link";
 import useLink from "../_context/useProduct";
 
 function LinkListDesktop() {
-  const { submittedData, submittedProfile, imageFile } = useLink();
+  const { submittedData, submittedProfile, blankProfile } = useLink();
   return (
     <div className="relative hidden xl:w-[40.94%] bg-white xl:flex items-center justify-center rounded-[0.75rem]">
       <div className="absolute top-[6.344rem]">
@@ -32,7 +31,7 @@ function LinkListDesktop() {
             <div className="mb-[3.5rem]">
               <div className="relative flex items-center justify-center w-[96px] h-[96px] mx-auto">
                 <Image
-                  src={imageFile}
+                  src={blankProfile}
                   alt="profile picture"
                   fill
                   className="rounded-[50%]  border-[#633CFF] "
