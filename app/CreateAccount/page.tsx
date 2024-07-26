@@ -9,6 +9,7 @@ export default function Home() {
   const [createPassword, setCreatePassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+  const [passwordType, setPasswordType] = useState<boolean>(false);
 
   const router = useRouter();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -69,7 +70,7 @@ export default function Home() {
                   (!email && error) || (!emailRegex.test(email) && error)
                     ? "border-[#FF3939]"
                     : "border-[#D9D9D9]"
-                } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
+                } box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
                 type="text"
                 placeholder="e.g. alex@email.com"
               />
@@ -105,8 +106,8 @@ export default function Home() {
                   (createPassword !== confirmPassword && error)
                     ? "border-[#FF3939]"
                     : "border-[#D9D9D9]"
-                } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
-                type="password"
+                } box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
+                type={passwordType ? "text" : "password"}
                 placeholder="At least 8 characters"
               />
               <p
@@ -119,10 +120,10 @@ export default function Home() {
                 }  absolute pl-[0.5rem] text-[#FF3939] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]`}
               >
                 {(!createPassword && "Please check again") ||
-                  (createPassword.length < 8 && "At least 8 characters") ||
                   (createPassword !== confirmPassword &&
                     "Password does not match")}
               </p>
+
               <Image
                 className="absolute bottom-[1rem] left-[1rem]"
                 src="/assets/password-icon.svg"
@@ -140,8 +141,8 @@ export default function Home() {
               </label>
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="   border-[#D9D9D9] box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]"
-                type="password"
+                className="   border-[#D9D9D9] box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]"
+                type={passwordType ? "text" : "password"}
                 placeholder="At least 8 characters"
               />
 
@@ -152,12 +153,25 @@ export default function Home() {
                 width="16"
                 height="16"
               />
+              <p
+                onClick={() => setPasswordType((p) => !p)}
+                className="
+                  absolute cursor-pointer pl-[0.5rem] text-[#333333] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]"
+              >
+                {confirmPassword.length > 1 && (passwordType ? "hide" : "show")}
+              </p>
             </div>
           </div>
-          <p className="text-[#737373] mt-[1.5rem]">
+          <p
+            className={`${
+              createPassword.length < 8 && error
+                ? "text-[#FF3939]"
+                : "text-[#737373]"
+            } text-[#737373] mt-[1.5rem]`}
+          >
             Password must contain at least 8 characters
           </p>
-          <button className="box active:bg-[#BEADFF] block w-full h-[3rem] bg-[#633CFF] rounded-lg my-[1.5rem]  text-center font-semibold text-[#fff] ">
+          <button className="box hover:bg-[#BEADFF] active:bg-[#BEADFF] block w-full h-[3rem] bg-[#633CFF] rounded-lg my-[1.5rem]  text-center font-semibold text-[#fff] ">
             Create new account
           </button>
         </form>

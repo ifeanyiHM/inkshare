@@ -78,18 +78,6 @@ function Acc() {
                           className="rounded-[0.75rem] object-cover"
                         />
                       </div>
-                      {/* <div
-                        className={`${
-                          isImageUploaded ? "flex" : "hidden"
-                        } absolute top-[-12rem] rounded-[0.75rem] relative w-[12.063rem] h-[12.063rem] bg-[#00000080]`}
-                      >
-                        <Image
-                          src="/assets/overlap-pic.svg"
-                          alt="ovelapping image icon"
-                          fill
-                          className="rounded-[0.75rem]"
-                        />
-                      </div> */}
 
                       <div
                         className={`${
@@ -127,7 +115,7 @@ function Acc() {
                     !firstName && error
                       ? "border-[#FF3939]"
                       : "border-[#D9D9D9]"
-                  } box md:w-[57.33%] active:border-[#633CFF]  outline-none px-[1rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
+                  } box md:w-[57.33%] active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[1rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
                   type="text"
                   placeholder="Ben"
                 />
@@ -150,7 +138,7 @@ function Acc() {
                   onChange={(e) => setLastName(e.target.value)}
                   className={`${
                     !lastName && error ? "border-[#FF3939]" : "border-[#D9D9D9]"
-                  } box md:w-[57.33%] active:border-[#633CFF]  outline-none px-[1rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
+                  } box md:w-[57.33%] active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[1rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
                   type="text"
                   placeholder="Wright"
                 />

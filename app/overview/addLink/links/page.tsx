@@ -154,7 +154,7 @@ function LinkPage() {
                       (!URL_TYPE.test(inputValues[formIndex]) && inputError)
                         ? "border-[#FF3939]"
                         : "border-[#D9D9D9]"
-                    }  box block w-full h-[3rem] active:border-[#633CFF] outline-none bg-[#fff] rounded-lg pl-[2.75rem] border border-[#D9D9D9]`}
+                    }  box block w-full h-[3rem] active:border-[#633CFF] hover:border-[#633CFF] outline-none bg-[#fff] rounded-lg pl-[2.75rem] border border-[#D9D9D9]`}
                     type="text"
                     placeholder="e.g. https://www.github.com/johnappleseed"
                     value={inputValues[formIndex] || ""}

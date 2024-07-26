@@ -8,6 +8,7 @@ export default function Home() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+  const [passwordType, setPasswordType] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -65,7 +66,7 @@ export default function Home() {
                   (!email && error) || (!emailRegex.test(email) && error)
                     ? "border-[#FF3939]"
                     : "border-[#D9D9D9]"
-                } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
+                } box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
                 type="text"
                 placeholder="e.g. alex@email.com"
               />
@@ -100,8 +101,8 @@ export default function Home() {
                 onChange={(e) => setPassword(e.target.value)}
                 className={`${
                   !password && error ? "border-[#FF3939]" : "border-[#D9D9D9]"
-                } box active:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
-                type="password"
+                } box active:border-[#633CFF] hover:border-[#633CFF]  outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
+                type={passwordType ? "text" : "password"}
                 placeholder="Enter your password"
               />
               <p
@@ -110,6 +111,13 @@ export default function Home() {
                 }  absolute pl-[0.5rem] text-[#FF3939] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]`}
               >
                 Please check again
+              </p>
+              <p
+                onClick={() => setPasswordType((p) => !p)}
+                className="
+                  absolute cursor-pointer pl-[0.5rem] text-[#333333] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]"
+              >
+                {password.length > 1 && (passwordType ? "hide" : "show")}
               </p>
               <Image
                 className="absolute bottom-[1rem] left-[1rem]"
@@ -120,7 +128,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <button className="box active:bg-[#BEADFF] block w-full h-[3rem] bg-[#633CFF] rounded-lg my-[1.5rem]  text-center font-semibold text-[#fff] ">
+          <button className="box hover:bg-[#BEADFF] active:bg-[#BEADFF] block w-full h-[3rem] bg-[#633CFF] rounded-lg my-[1.5rem]  text-center font-semibold text-[#fff] ">
             Login
           </button>
         </form>
