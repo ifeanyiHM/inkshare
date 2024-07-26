@@ -78,7 +78,7 @@ function Acc() {
                           className="rounded-[0.75rem] object-cover"
                         />
                       </div>
-                      <div
+                      {/* <div
                         className={`${
                           isImageUploaded ? "flex" : "hidden"
                         } absolute top-[-12rem] rounded-[0.75rem] relative w-[12.063rem] h-[12.063rem] bg-[#00000080]`}
@@ -89,21 +89,22 @@ function Acc() {
                           fill
                           className="rounded-[0.75rem]"
                         />
+                      </div> */}
+
+                      <div
+                        className={`${
+                          isImageUploaded ? "flex" : "hidden"
+                        } absolute bottom-0 rounded-[0.75rem]  items-center justify-center py-[3.812rem] px-[2.438rem] bg-[#00000080]`}
+                      >
+                        <Image
+                          src="/assets/overlap-pic.svg"
+                          alt="ovelapping image icon"
+                          width="116"
+                          height="72"
+                          className="rounded-[0.75rem] block"
+                        />
                       </div>
                     </div>
-                    {/* <div
-                      className={`${
-                        isImageUploaded ? "flex" : "hidden"
-                      } absolute bottom-0 rounded-[0.75rem]  items-center justify-center py-[3.812rem] px-[2.438rem] bg-[#00000080]`}
-                    >
-                      <Image
-                        src="/assets/overlap-pic.svg"
-                        alt="ovelapping image icon"
-                        width="116"
-                        height="72"
-                        className="rounded-[0.75rem]"
-                      />
-                    </div> */}
                   </label>
                 </div>
                 <p className="text-[#737373] text-[0.75rem]">
