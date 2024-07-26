@@ -69,15 +69,29 @@ function Acc() {
                       accept="image/png, image/jpeg"
                       className="hidden"
                     />
-                    <div className="rounded-[0.75rem] relative w-[12.063rem] h-[12.063rem]">
-                      <Image
-                        src={imageFile}
-                        alt="profile picture"
-                        fill
-                        className="rounded-[0.75rem] object-cover"
-                      />
+                    <div className="relative w-[12.063rem] h-[12.063rem]">
+                      <div className="rounded-[0.75rem] relative w-[12.063rem] h-[12.063rem]">
+                        <Image
+                          src={imageFile}
+                          alt="profile picture"
+                          fill
+                          className="rounded-[0.75rem] object-cover"
+                        />
+                      </div>
+                      <div
+                        className={`${
+                          isImageUploaded ? "flex" : "hidden"
+                        } absolute top-[-12rem] rounded-[0.75rem] relative w-[12.063rem] h-[12.063rem] bg-[#00000080]`}
+                      >
+                        <Image
+                          src="/assets/overlap-pic.svg"
+                          alt="ovelapping image icon"
+                          fill
+                          className="rounded-[0.75rem]"
+                        />
+                      </div>
                     </div>
-                    <div
+                    {/* <div
                       className={`${
                         isImageUploaded ? "flex" : "hidden"
                       } absolute bottom-0 rounded-[0.75rem]  items-center justify-center py-[3.812rem] px-[2.438rem] bg-[#00000080]`}
@@ -89,7 +103,7 @@ function Acc() {
                         height="72"
                         className="rounded-[0.75rem]"
                       />
-                    </div>
+                    </div> */}
                   </label>
                 </div>
                 <p className="text-[#737373] text-[0.75rem]">
