@@ -97,7 +97,7 @@ function LinkListDesktop() {
               ).map((blankList) => (
                 <li
                   key={blankList}
-                  className="rounded-lg border relative w-[full] h-[2.75rem] flex items-center justify-between py-[0.813rem] bg-[#EEEEEE]"
+                  className="rounded-lg border  w-[full] h-[2.75rem]  py-[0.813rem] bg-[#EEEEEE]"
                 ></li>
               ))}
             </ul>
