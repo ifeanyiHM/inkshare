@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { dropDownList } from "../Data/LinkListData";
 import {
   defaultLinkProps,
@@ -8,6 +8,7 @@ import {
   LinkContextProps,
   submittedProfileProps,
 } from "../Data/ShareLinkProps";
+import { useBrowserStorageState } from "../Hooks/useBrowserStorageState";
 
 interface LinkProviderProps {
   children: ReactNode;
@@ -23,13 +24,11 @@ function LinkProvider({ children }: LinkProviderProps) {
 
   const [inputValues, setInputValues] = useState<string[]>([]);
   const [inputError, setInputError] = useState<boolean>(false);
-  const [submittedData, setSubmittedData] = useState<dropDownListProps[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [addForm, setAddForm] = useState<number[]>([]);
   const [isFormClicked, setIsFormClicked] = useState<boolean>(false);
   const [itemList, setItemList] = useState<dropDownListProps[]>(dropDownList);
-  const [blankProfile, setBlankProfile] = useState<string>("/assets/user.svg");
-
+  const [blankListImg, setBlankListImg] = useState<number>(5);
   const [selectedItems, setSelectedItems] = useState<number[]>(
     addForm.map(() => 0)
   );
@@ -38,14 +37,32 @@ function LinkProvider({ children }: LinkProviderProps) {
     null
   );
 
-  const [submittedProfile, setSubmittedProfile] =
-    useState<submittedProfileProps | null>(null);
-
-  const [imageFile, setImageFile] = useState<string>(
-    "/assets/upload-image.svg"
+  //locale storage
+  const [blankProfile, setBlankProfile] = useBrowserStorageState<string>(
+    "/assets/user.svg",
+    "blankProfile"
   );
 
+  const [imageFile, setImageFile] = useBrowserStorageState<string>(
+    "/assets/upload-image.svg",
+    "imageFile"
+  );
+
+  const [submittedData, setSubmittedData] = useBrowserStorageState<
+    dropDownListProps[]
+  >([], "submittedData");
+
+  const [submittedProfile, setSubmittedProfile] =
+    useBrowserStorageState<submittedProfileProps | null>(
+      null,
+      "submittedProfile"
+    );
+
   const router = useRouter();
+
+  useEffect(() => {
+    setBlankListImg(5 - submittedData.length);
+  }, [submittedData.length]);
 
   function handleSelectItem(formIndex: number, itemIndex: number) {
     setSelectedItems((prevSelectedItems) => {
@@ -164,6 +181,7 @@ function LinkProvider({ children }: LinkProviderProps) {
         errorMessage,
         blankProfile,
         setBlankProfile,
+        blankListImg,
       }}
     >
       {children}

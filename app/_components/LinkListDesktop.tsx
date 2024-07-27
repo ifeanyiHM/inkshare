@@ -3,7 +3,8 @@ import Link from "next/link";
 import useLink from "../_context/useProduct";
 
 function LinkListDesktop() {
-  const { submittedData, submittedProfile, blankProfile } = useLink();
+  const { submittedData, submittedProfile, blankProfile, blankListImg } =
+    useLink();
   return (
     <div className="relative hidden xl:w-[40.94%] bg-white xl:flex items-center justify-center rounded-[0.75rem]">
       <div className="absolute top-[6.344rem]">
@@ -46,7 +47,7 @@ function LinkListDesktop() {
               </p>
             </div>
 
-            <ul className="dropdown-list list-none flex flex-col gap-[1.25rem] pl-[0.5rem] mb-[0.563rem] w-[15.813rem] h-[18.5rem] overflow-y-scroll">
+            <ul className="dropdown-list list-none flex flex-col gap-[1.25rem] pl-[0.5rem] mb-[0.563rem] w-[15.813rem] h-[18.8rem] rounded-lg overflow-y-scroll">
               {submittedData.map((data, index) => (
                 <li
                   key={index}
@@ -58,9 +59,9 @@ function LinkListDesktop() {
                   <Link
                     href={data.value}
                     target="_blank"
-                    className="relative w-[full] flex items-center justify-between py-[0.813rem]"
+                    className="relative w-[full] flex items-center justify-between py-[0.63rem]"
                   >
-                    <span className="absolute left-[1rem] bottom-[1.2rem]">
+                    <span className="absolute left-[1rem] bottom-[0.9rem]">
                       <Image
                         src={data.src}
                         alt={data.name}
@@ -89,6 +90,15 @@ function LinkListDesktop() {
                     </span>
                   </Link>
                 </li>
+              ))}
+              {Array.from(
+                { length: blankListImg },
+                (_, index) => index + 1
+              ).map((blankList) => (
+                <li
+                  key={blankList}
+                  className="rounded-lg border relative w-[full] h-[2.75rem] flex items-center justify-between py-[0.813rem] bg-[#EEEEEE]"
+                ></li>
               ))}
             </ul>
           </div>

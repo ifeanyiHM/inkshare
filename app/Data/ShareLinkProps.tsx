@@ -21,6 +21,7 @@ export interface LinkContextProps {
   errorMessage: string;
   blankProfile: string;
   setBlankProfile: (file: string) => void;
+  blankListImg: number;
 }
 
 export const defaultLinkProps: LinkContextProps = {
@@ -46,6 +47,7 @@ export const defaultLinkProps: LinkContextProps = {
   errorMessage: "",
   blankProfile: "/assets/user.svg",
   setBlankProfile: () => {},
+  blankListImg: 5,
 };
 
 export interface submittedProfileProps {
