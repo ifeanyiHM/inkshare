@@ -30,7 +30,7 @@ function LinkListDesktop() {
         )}
         {submittedData.length > 0 || submittedProfile !== null ? (
           <div className=" absolute top-[3.969rem] flex flex-col justify-center items-center  w-full  mx-auto text-center  ">
-            <div className="mb-[3.5rem]">
+            <div className="mb-[3rem]">
               <div className="relative flex items-center justify-center w-[96px] h-[96px] mx-auto">
                 <Image
                   src={blankProfile}
@@ -48,7 +48,7 @@ function LinkListDesktop() {
               </p>
             </div>
 
-            <ul className="dropdown-list list-none flex flex-col gap-[1.25rem] pl-[0.5rem] mb-[0.563rem] w-[15.813rem] h-[18.8rem] rounded-lg overflow-y-scroll">
+            <ul className="dropdown-list list-none flex flex-col gap-[1.25rem] pl-[0.5rem] mb-[0.563rem] w-[15.813rem] h-[19.4rem] rounded-lg overflow-y-scroll">
               {submittedData.map((data, index) => (
                 <li
                   key={index}

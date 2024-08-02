@@ -141,7 +141,7 @@ export default function Home() {
               </label>
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="   border-[#D9D9D9] box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]"
+                className=" box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]"
                 type={passwordType ? "text" : "password"}
                 placeholder="At least 8 characters"
               />
