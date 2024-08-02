@@ -2,6 +2,7 @@
 
 import LinkListDesktop from "@/app/_components/LinkListDesktop";
 import useLink from "@/app/_context/useProduct";
+import { useBrowserStorageState } from "@/app/Hooks/useBrowserStorageState";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -11,7 +12,10 @@ function Acc() {
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  const [isImageUploaded, setIsImageUploaded] = useState<boolean>(false);
+  const [isImageUploaded, setIsImageUploaded] = useBrowserStorageState<boolean>(
+    false,
+    "isImageUploaded"
+  );
 
   const router = useRouter();
 
