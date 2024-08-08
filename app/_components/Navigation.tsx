@@ -3,9 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import SpinnerMini from "./SpinnerMini";
+import useLink from "../_context/useProduct";
 
 function Navigation() {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(false);
+
+  const { loading, Logout } = useLink();
 
   const pathName = usePathname();
   const links = [
@@ -65,14 +69,30 @@ function Navigation() {
           );
         })}
       </div>
-      <div className="px-[1rem] md:px-[1.688rem] py-[0.688rem] border border-[#633CFF] md:hover:bg-[#EFEBFF] rounded-lg">
-        <Link href="/timeline">
-          {!isDesktopView ? (
-            <Image src="/assets/eye.svg" alt="preview" width="20" height="20" />
-          ) : (
-            <span className="text-[#633CFF] font-semibold">Preview</span>
-          )}
-        </Link>
+      <div className="xl:flex xl:gap-[1rem]">
+        <div className="px-[1rem] md:px-[1.688rem] py-[0.688rem] border border-[#633CFF] md:hover:bg-[#EFEBFF] rounded-lg">
+          <Link href="/timeline">
+            {!isDesktopView ? (
+              <Image
+                src="/assets/eye.svg"
+                alt="preview"
+                width="20"
+                height="20"
+              />
+            ) : (
+              <span className="text-[#633CFF] font-semibold">Preview</span>
+            )}
+          </Link>
+        </div>
+
+        <div
+          onClick={Logout}
+          className="hidden xl:block bg-[#633CFF] hover:bg-[#BEADFF] focus:bg-[#BEADFF] font-semibold px-[1.688rem] py-[0.688rem] text-[#fff] text-center rounded-lg cursor-pointer"
+        >
+          <span className="flex items-center justify-center gap-[1rem] md:gap-[0.3rem]">
+            {loading ? <SpinnerMini /> : "Logout"}
+          </span>
+        </div>
       </div>
     </div>
   );

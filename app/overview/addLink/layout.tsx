@@ -1,14 +1,21 @@
 "use client";
 import LinkListDesktop from "@/app/_components/LinkListDesktop";
+import SpinnerMini from "@/app/_components/SpinnerMini";
 import useLink from "@/app/_context/useProduct";
-import Image from "next/image";
 import { ReactNode } from "react";
 
 interface linkProps {
   children: ReactNode;
 }
 function Layout({ children }: linkProps) {
-  const { handleAddForm, isFormClicked, handleSubmitForm, addForm } = useLink();
+  const {
+    handleAddForm,
+    isFormClicked,
+    handleSubmitForm,
+    addForm,
+    Logout,
+    loading,
+  } = useLink();
 
   return (
     <div className="xl:flex xl:gap-[1.5rem] xl:bg-[#FAFAFA] xl:mt-0 xl:pt-[1.5rem] pt-[1.5rem] md:pt-[2.5rem] mx-[1rem] md:mx-[1.5rem] md:mt-[1.5rem] mt-[1rem] bg-[#fff] rounded-[0.75rem] ">
@@ -40,6 +47,16 @@ function Layout({ children }: linkProps) {
             }  font-semibold w-full md:w-[5.688rem] py-[0.688rem] text-[#fff] text-center rounded-lg cursor-pointer`}
           >
             Save
+          </button>
+        </div>
+        <div className="xl:hidden px-[1rem] md:px-[2.5rem] py-[1rem] md:py-[1.5rem] text-end">
+          <button
+            onClick={Logout}
+            className="bg-[#633CFF] hover:bg-[#BEADFF] focus:bg-[#BEADFF] font-semibold w-full md:w-[5.688rem] py-[0.688rem] text-[#fff] text-center rounded-lg cursor-pointer"
+          >
+            <span className="flex items-center justify-center gap-[1rem] md:gap-[0.3rem]">
+              {loading && <SpinnerMini />} Logout
+            </span>
           </button>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import { supabase } from "../lib/supabase";
+
 export const dropDownList = [
   {
     name: "GitHub",
@@ -81,3 +83,25 @@ export const dropDownList = [
     color: "#EC7100",
   },
 ];
+
+// async function getLinks() {
+//   try {
+//     let { data: links, error } = await supabase.from("links").select("*");
+
+//     if (error) {
+//       console.error("Error fetching links:", error);
+//     } else {
+//       if (links?.length === 0) {
+//         console.log("No links found in the database.");
+//       } else {
+//         console.log("Links retrieved:", links);
+//       }
+//     }
+
+//     return links;
+//   } catch (err) {
+//     console.error("Unexpected error:", err);
+//   }
+// }
+
+// getLinks();

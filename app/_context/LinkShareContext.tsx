@@ -1,15 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { dropDownList } from "../Data/LinkListData";
+import { useBrowserStorageState } from "../Hooks/useBrowserStorageState";
+import { supabase } from "../lib/supabase";
 import {
   defaultLinkProps,
   dropDownListProps,
   LinkContextProps,
   submittedProfileProps,
 } from "../Data/ShareLinkProps";
-
-import { useBrowserStorageState } from "../Hooks/useBrowserStorageState";
+import { getLinks } from "../services/api";
 
 interface LinkProviderProps {
   children: ReactNode;
@@ -28,8 +28,10 @@ function LinkProvider({ children }: LinkProviderProps) {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [addForm, setAddForm] = useState<number[]>([]);
   const [isFormClicked, setIsFormClicked] = useState<boolean>(false);
-  const [itemList, setItemList] = useState<dropDownListProps[]>(dropDownList);
+  const [itemList, setItemList] = useState<dropDownListProps[]>([]);
   const [blankListImg, setBlankListImg] = useState<number>(5);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
   const [selectedItems, setSelectedItems] = useState<number[]>(
     addForm.map(() => 0)
   );
@@ -60,6 +62,17 @@ function LinkProvider({ children }: LinkProviderProps) {
     );
 
   const router = useRouter();
+
+  async function Logout() {
+    setLoading(true);
+    await supabase.auth.signOut();
+    router.refresh();
+    setLoading(false);
+  }
+
+  useEffect(function () {
+    getLinks(setItemList);
+  }, []);
 
   useEffect(() => {
     setBlankListImg(5 - submittedData.length);
@@ -160,6 +173,7 @@ function LinkProvider({ children }: LinkProviderProps) {
   return (
     <LinkContext.Provider
       value={{
+        Logout,
         addForm,
         handleAddForm,
         isFormClicked,
@@ -183,6 +197,10 @@ function LinkProvider({ children }: LinkProviderProps) {
         blankProfile,
         setBlankProfile,
         blankListImg,
+        loading,
+        setLoading,
+        email,
+        setEmail,
       }}
     >
       {children}

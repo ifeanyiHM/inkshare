@@ -1,8 +1,10 @@
 "use client";
 
 import LinkListDesktop from "@/app/_components/LinkListDesktop";
+import SpinnerMini from "@/app/_components/SpinnerMini";
 import useLink from "@/app/_context/useProduct";
 import { useBrowserStorageState } from "@/app/Hooks/useBrowserStorageState";
+import { createProfile } from "@/app/services/api";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -10,7 +12,7 @@ import { FormEvent, useState } from "react";
 function Acc() {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  // const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [isImageUploaded, setIsImageUploaded] = useBrowserStorageState<boolean>(
     false,
@@ -19,8 +21,16 @@ function Acc() {
 
   const router = useRouter();
 
-  const { setSubmittedProfile, imageFile, setImageFile, setBlankProfile } =
-    useLink();
+  const {
+    setSubmittedProfile,
+    imageFile,
+    setImageFile,
+    setBlankProfile,
+    loading,
+    setLoading,
+    email,
+    setEmail,
+  } = useLink();
 
   async function handleAddProfile(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,6 +40,10 @@ function Acc() {
       return;
     }
 
+    setLoading(true);
+
+    await createProfile({ firstName, lastName, email, imageFile });
+
     setSubmittedProfile({
       firstName,
       lastName,
@@ -37,10 +51,8 @@ function Acc() {
       imageFile,
     });
 
-    // setFirstName("");
-    // setLastName("");
-    // setEmail("");
     router.push("/timeline");
+    setLoading(false);
   }
 
   function imageUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -175,8 +187,10 @@ function Acc() {
 
           <hr />
           <div className="px-[1rem] md:px-[2.5rem] py-[1rem] md:py-[1.5rem] text-end">
-            <button className="bg-[#633CFF] font-semibold w-full md:w-[5.688rem] py-[0.688rem] text-[#fff] text-center rounded-lg">
-              Save
+            <button className="bg-[#633CFF] hover:bg-[#BEADFF] font-semibold w-full md:w-[5.688rem] py-[0.688rem] text-[#fff] text-center rounded-lg">
+              <span className="flex items-center justify-center gap-[1rem] md:gap-[0.3rem]">
+                {loading ? <SpinnerMini /> : "Save"}
+              </span>
             </button>
           </div>
         </form>

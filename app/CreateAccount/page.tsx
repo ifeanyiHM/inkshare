@@ -3,41 +3,88 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { supabase } from "../lib/supabase";
+import SpinnerMini from "../_components/SpinnerMini";
+import useLink from "../_context/useProduct";
 
 export default function Home() {
-  const [email, setEmail] = useState<string>("");
+  // const [email, setEmail] = useState<string>("");
   const [createPassword, setCreatePassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  const [passwordType, setPasswordType] = useState<boolean>(false);
+  const [createPasswordType, setCreatePasswordType] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [confirmPasswordType, setConfirmPasswordType] =
+    useState<boolean>(false);
+
+  const { email, setEmail } = useLink();
 
   const router = useRouter();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!email || !createPassword) {
-      setError(true);
-      return;
-    }
+    setError(false);
+    setMessage("");
 
-    if (createPassword !== confirmPassword) {
-      setError(true);
-      return;
-    }
+    try {
+      setLoading(true);
 
-    if (createPassword.length < 8) {
-      setError(true);
-      return;
-    }
+      if (!email || !createPassword || !confirmPassword) {
+        setError(true);
+        setMessage("All fields are required.");
+        return;
+      }
 
-    if (!emailRegex.test(email)) {
-      setError(true);
-      return;
-    }
+      if (createPassword !== confirmPassword) {
+        setError(true);
+        setMessage("Password does not match.");
+        return;
+      }
 
-    router.push("/overview/addLink");
+      if (createPassword.length < 8) {
+        setError(true);
+        setMessage("Password must be at least 8 characters long.");
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        setError(true);
+        setMessage("Please enter a valid email address.");
+        return;
+      }
+
+      let { data: dataUser, error: authError } = await supabase.auth.signUp({
+        email: email,
+        password: createPassword,
+      });
+
+      if (authError) {
+        if (authError.message.includes("Failed to fetch")) {
+          setMessage("Please check your internet connection or try again.");
+        } else {
+          setMessage(
+            "We're experiencing a high volume of requests. Please try again shortly."
+          );
+        }
+        setError(true);
+      } else if (dataUser) {
+        console.log(dataUser);
+        setMessage(
+          `An email has been sent to ${email}. Please check your inbox.`
+        );
+        // router.refresh();
+      }
+    } catch (err) {
+      console.log(err);
+      setError(true);
+      setMessage("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
+
   return (
     <div className="p-[2rem] flex flex-col gap-[4rem] md:gap-[3.188rem] md:bg-[#FAFAFA] md:items-center md:justify-center ">
       <div className="logo">
@@ -107,21 +154,16 @@ export default function Home() {
                     ? "border-[#FF3939]"
                     : "border-[#D9D9D9]"
                 } box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]`}
-                type={passwordType ? "text" : "password"}
+                type={createPasswordType ? "text" : "password"}
                 placeholder="At least 8 characters"
               />
               <p
-                className={`${
-                  (!createPassword && error) ||
-                  (createPassword !== confirmPassword && error) ||
-                  (createPassword.length < 8 && error)
-                    ? "block"
-                    : "hidden"
-                }  absolute pl-[0.5rem] text-[#FF3939] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]`}
+                onClick={() => setCreatePasswordType((p) => !p)}
+                className="
+                  absolute cursor-pointer text-[#333333] text-[0.75rem] pl-[0] right-[1rem] bottom-[0.9rem]"
               >
-                {(!createPassword && "Please check again") ||
-                  (createPassword !== confirmPassword &&
-                    "Password does not match")}
+                {createPassword.length > 1 &&
+                  (createPasswordType ? "hide" : "show")}
               </p>
 
               <Image
@@ -142,7 +184,7 @@ export default function Home() {
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className=" box active:border-[#633CFF] hover:border-[#633CFF] outline-none px-[2.75rem] py-[0.75rem] block w-full h-[3rem] border border-[#D9D9D9] rounded-lg text=[#333333]"
-                type={passwordType ? "text" : "password"}
+                type={confirmPasswordType ? "text" : "password"}
                 placeholder="At least 8 characters"
               />
 
@@ -154,25 +196,35 @@ export default function Home() {
                 height="16"
               />
               <p
-                onClick={() => setPasswordType((p) => !p)}
+                onClick={() => setConfirmPasswordType((p) => !p)}
                 className="
-                  absolute cursor-pointer pl-[0.5rem] text-[#333333] text-[0.75rem] md:pl-[0] md:right-[1rem] md:bottom-[0.9rem]"
+                  absolute cursor-pointer text-[#333333] text-[0.75rem] pl-[0] right-[1rem] bottom-[0.9rem]"
               >
-                {confirmPassword.length > 1 && (passwordType ? "hide" : "show")}
+                {confirmPassword.length > 1 &&
+                  (confirmPasswordType ? "hide" : "show")}
               </p>
             </div>
           </div>
-          <p
-            className={`${
-              createPassword.length < 8 && error
-                ? "text-[#FF3939]"
-                : "text-[#737373]"
-            } text-[#737373] mt-[1.5rem]`}
-          >
-            Password must contain at least 8 characters
-          </p>
-          <button className="box hover:bg-[#BEADFF] active:bg-[#BEADFF] block w-full h-[3rem] bg-[#633CFF] rounded-lg my-[1.5rem]  text-center font-semibold text-[#fff] ">
-            Create new account
+          {message ? (
+            <p
+              className={`${
+                message ===
+                `An email has been sent to ${email}. Please check your inbox.`
+                  ? "text-[#737373]"
+                  : "text-[#FF3939]"
+              }  mt-[1.5rem]`}
+            >
+              {message}
+            </p>
+          ) : (
+            <p className=" text-[#737373] mt-[1.5rem]">
+              Password must contain at least 8 characters
+            </p>
+          )}
+          <button className="box  hover:bg-[#BEADFF] active:bg-[#BEADFF] block w-full h-[3rem] bg-[#633CFF] rounded-lg my-[1.5rem]  text-center font-semibold text-[#fff] ">
+            <span className="flex items-center justify-center gap-[1rem]">
+              {loading && <SpinnerMini />} Create new account
+            </span>
           </button>
         </form>
         <div className="md:flex md:gap-[0.3rem] items-center justify-center">

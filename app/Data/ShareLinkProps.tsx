@@ -1,4 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface LinkContextProps {
+  Logout: () => void;
   addForm: number[];
   handleAddForm: () => void;
   isFormClicked: boolean;
@@ -22,9 +25,14 @@ export interface LinkContextProps {
   blankProfile: string;
   setBlankProfile: (file: string) => void;
   blankListImg: number;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  email: string;
+  setEmail: Dispatch<SetStateAction<string>>;
 }
 
 export const defaultLinkProps: LinkContextProps = {
+  Logout: () => {},
   addForm: [],
   handleAddForm: () => {},
   isFormClicked: false,
@@ -48,6 +56,10 @@ export const defaultLinkProps: LinkContextProps = {
   blankProfile: "/assets/user.svg",
   setBlankProfile: () => {},
   blankListImg: 5,
+  loading: false,
+  setLoading: () => {},
+  email: "",
+  setEmail: () => {},
 };
 
 export interface submittedProfileProps {
